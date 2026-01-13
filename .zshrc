@@ -171,6 +171,9 @@ alias sendlogs='~/user_scripts/arch_setup_scripts/send_logs.sh --auto'
 # update dusky
 alias update_dusky='~/user_scripts/arch_setup_scripts/update_dusky.sh'
 
+# update dusky reset
+alias dusky_force_sync_github='~/user_scripts/arch_setup_scripts/dusky_force_sync_github.sh'
+
 # Check if eza is installed
 if command -v eza >/dev/null; then
     alias ls='eza --icons --group-directories-first'
