@@ -40,8 +40,7 @@
 .config/starship.toml
 .config/mimeapps.list
 .local/share/applications/
-.local/share/errands/data.json
-.local/share/rofi-cliphist/pins/
+.local/share/rofi_cliphist_and_errands_backup/
 Documents/pensive/Adobe/
 Documents/pensive/ai_prompt/
 Documents/pensive/linux/
