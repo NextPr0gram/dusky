@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-#  Ollama Terminal Chat (v4.1 - Audited & Refactored)
+#  Ollama Terminal Chat (v4.2 - Auto-Install Enabled)
 #  Description: Hardened chat loop with reliable streaming and proper cleanup.
 # ==============================================================================
 
@@ -52,11 +52,24 @@ die() {
 check_dependencies() {
     local -a missing=()
     local cmd
+    
+    # Check for all required tools
     for cmd in jq curl ollama; do
-        command -v "$cmd" &>/dev/null || missing+=("$cmd")
+        if ! command -v "$cmd" &>/dev/null; then
+            missing+=("$cmd")
+        fi
     done
+
+    # If any are missing, attempt auto-install via pacman
     if (( ${#missing[@]} > 0 )); then
-        die "Missing required commands: ${missing[*]}. Install via: sudo pacman -S ${missing[*]}"
+        log_info "Missing dependencies detected: ${missing[*]}. Attempting auto-install..."
+        
+        # Sudo will prompt user for password if necessary
+        if sudo pacman -S --needed "${missing[@]}"; then
+            log_info "Dependencies installed successfully."
+        else
+            die "Failed to auto-install dependencies. Please run: sudo pacman -S ${missing[*]}"
+        fi
     fi
 }
 
@@ -155,7 +168,7 @@ update_history() {
 print_header() {
     clear
     printf '%b========================================%b\n' "$CYAN" "$RESET"
-    printf ' %bOllama Terminal Chat%b %b(v4.1)%b\n' "$BOLD" "$RESET" "$DIM" "$RESET"
+    printf ' %bOllama Terminal Chat%b %b(v4.2)%b\n' "$BOLD" "$RESET" "$DIM" "$RESET"
     printf ' %bModel:%b %s\n' "$BLUE" "$RESET" "$MODEL"
     printf ' %bCommands:%b /model, /clear, /exit, /help\n' "$DIM" "$RESET"
     printf '%b========================================%b\n\n' "$CYAN" "$RESET"
