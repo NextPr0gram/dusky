@@ -155,6 +155,8 @@ Note : i've purposely decided to not use quickshell for anything in the interest
 
 - Ai llm local infrense using ollama side bar (terminal, incredilby resource efficient)
 
+- keybind TUI setter that auto checks for conflicts and unbinds any existing keybind in the default hyrland keybind.conf
+
 - Easily switch Swaync's side to either lift or right.
 
 - airmon wifi script for wifi testing/password cracking
