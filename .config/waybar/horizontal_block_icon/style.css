@@ -18,14 +18,14 @@ window#waybar > box {
   border-radius: 8px;
   border: 1px solid alpha(@outline, 0.5); 
   margin: 4px;
-  background-color: alpha(@background, 0.95);
+  background-color: alpha(@background, 0.9);
   box-shadow: 0px 4px 4px 0px @shadow;
   transition-property: background-color;
   transition-duration: .5s;
 }
 
 /* Groups */
-#left1, #left2, #left3, #right1, #right2 {
+#left1, #left2, #left3, #right1, #right2, #right3 {
   background-color: alpha(@surface_container, 0.5);
   border-radius: 6px;
   margin: 3px 2px;
@@ -82,6 +82,7 @@ window#waybar > box {
 #mpris,
 #bluetooth,
 #pulseaudio,
+#custom-notification,
 #custom-power {
   margin: 0px 4px;
   padding: 0 2px;
@@ -96,10 +97,10 @@ window#waybar > box {
     margin-right: 8px;
 }
 
-#custom-power {
+/*custom-power {
     color: @error;
-    margin-left: 8px;
-}
+    margin-left: 0px;
+}*/
 
 #battery.charging, #battery.plugged { color: @tertiary; }
 
