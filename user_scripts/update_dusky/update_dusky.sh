@@ -262,7 +262,7 @@ declare -ra UPDATE_SEQUENCE=(
     "U | 087_hypr_custom_config_setup.sh"
     "U | 088_hyprctl_reload.sh"
     "U | 090_switch_clipboard.sh --terminal"
-    "S | 091_sddm_setup.sh --auto"
+#    "S | 091_sddm_setup.sh --auto"
 
 
 
