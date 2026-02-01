@@ -63,6 +63,7 @@ readonly TARGET_FILES=(
     "clipboard_persistance.desktop"
     "dusky_control_center.desktop"
     "dusky_appearances.desktop"
+    "dusky_input.desktop"
     "file_switcher.desktop"
     "google_image_search.desktop"
     "hypridle_timeout.desktop"
