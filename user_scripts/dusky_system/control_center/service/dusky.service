@@ -12,6 +12,9 @@ BusName=com.github.dusky.controlcenter
 # CRITICAL: Forces Python to flush logs immediately for real-time debugging
 Environment=PYTHONUNBUFFERED=1
 
+# Memory accounting ram
+MemoryAccounting=yes
+
 # The %h specifier automatically inserts your home directory path
 ExecStart=%h/user_scripts/dusky_system/control_center/dusky_control_center.py --gapplication-service
 
