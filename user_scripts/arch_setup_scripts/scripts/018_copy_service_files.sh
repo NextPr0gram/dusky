@@ -38,6 +38,9 @@ readonly SERVICES_CONFIG=(
 
     # Example 1: Network Meter (Default: Enable)
     "$HOME/user_scripts/waybar/network/network_meter.service | enable"
+
+    # Dusky Control Center Daemon (Default: Disable)
+    "$HOME/user_scripts/dusky_system/control_center/service/dusky.service | disable"
 )
 
 # XDG Standard: ~/.config/systemd/user
