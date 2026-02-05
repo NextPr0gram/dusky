@@ -202,6 +202,7 @@ class RowProperties(TypedDict, total=False):
     max: float
     step: float
     default: float
+    debounce: bool  # Added for instant slider updates
 
 
 class RowContext(TypedDict, total=False):
@@ -903,6 +904,7 @@ class SliderRow(BaseActionRow):
         self.max_val = _safe_float(properties.get("max"), 100.0)
         step = _safe_float(properties.get("step"), 1.0)
         self.step_val = step if step > MIN_STEP_VALUE else 1.0
+        self.debounce_enabled = bool(properties.get("debounce", True))
 
         self._slider_lock = threading.Lock()
         self._slider_changing = False
@@ -955,6 +957,11 @@ class SliderRow(BaseActionRow):
 
             self._pending_value = snapped
 
+        # Instant update override
+        if not self.debounce_enabled:
+            self._execute_debounced_action()
+            return
+
         # Safe update of debounce source
         with self._state.lock:
             if self._state.is_destroyed:
@@ -983,9 +990,21 @@ class SliderRow(BaseActionRow):
         if isinstance(self.on_action, dict) and self.on_action.get("type") == "exec":
             if cmd := self.on_action.get("command"):
                 final_cmd = str(cmd).replace("{value}", str(int(value)))
-                utility.execute_command(
-                    final_cmd, "Slider", bool(self.on_action.get("terminal", False))
-                )
+
+                # OPTIMIZATION: Fast Path Execution for Background Commands
+                # If command is not terminal-based, we bypass the heavy utility.execute_command
+                # wrapper (which involves UWSM/setsid overhead) and run directly.
+                is_terminal = bool(self.on_action.get("terminal", False))
+                if is_terminal:
+                    utility.execute_command(final_cmd, "Slider", True)
+                else:
+                    # Fire-and-forget directly to OS
+                    subprocess.Popen(
+                        final_cmd,
+                        shell=True,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                    )
 
         return GLib.SOURCE_REMOVE
 

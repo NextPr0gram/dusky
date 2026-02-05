@@ -76,6 +76,30 @@ pages:
     properties:
       title: Live System Status
     items:
+    - type: slider
+      properties:
+        title: Volume
+        icon: audio-volume-high-symbolic
+        min: 0
+        max: 100
+        step: 1
+        default: 50
+        debounce: false
+      on_change:
+        type: exec
+        command: wpctl set-volume @DEFAULT_AUDIO_SINK@ {value}%
+    - type: slider
+      properties:
+        title: Brightness
+        icon: display-brightness-high-symbolic
+        min: 0
+        max: 100
+        step: 1
+        default: 50
+        debounce: false
+      on_change:
+        type: exec
+        command: brightnessctl set {value}%
     - type: label
       properties:
         title: Kernel
