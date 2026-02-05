@@ -389,3 +389,43 @@ The interface uses `Adw.OverlaySplitView`.
 - **Check:** Run `dusky_control_center.py` from a terminal to see the error output.
     
 - **Recover:** If the config is broken, Dusky will launch into a special "Error State" page showing you the Python stack trace, allowing you to fix the YAML and Hot Reload (`Ctrl+R`) without crashing.
+
+### 1. `dusky_control_center.py` (The Manager)
+
+**Role:** Main Application Logic & Window Management. This is the file you actually run. It creates the window, manages the sidebar navigation, handles the Search bar logic (`Ctrl+F`), and listens for the Hot Reload command (`Ctrl+R`). It doesn't know how to build a specific slider or button; it just coordinates everything.
+
+- **Key Job:** Keeps the app running in the background (Daemon mode) so it opens instantly.
+    
+
+### 2. `rows.py` (The Kitchen)
+
+**Role:** Widget Factory & Logic. This file contains the "recipes" for every interactive element. When the config asks for a "slider," this file builds the `SliderRow`, attaches the threading logic (so dragging it doesn't freeze the app), and handles the debouncing.
+
+- **Key Job:** Converts abstract YAML text into actual clicking, sliding GTK widgets.
+    
+
+### 3. `utility.py` (The Supply Chain)
+
+**Role:** Helper Functions & Safety. This file does the dirty work that multiple parts of the app need. It handles:
+
+- **Safe Command Execution:** Wrapping commands in `uwsm-app` so they work on Hyprland.
+    
+- **Atomic Saves:** Saving your toggle states to disk without corrupting files if the power fails.
+    
+- **System Info:** Reading RAM/CPU usage efficiently.
+    
+- **Key Job:** ensuring thread safety and preventing crashes when interacting with the OS.
+    
+
+### 4. `dusky_config.yaml` (The Menu)
+
+**Role:** User Configuration. This is the **only** file a normal user interacts with. It defines _what_ goes in the app. It lists the pages, the icons, the titles, and the commands to run.
+
+- **Key Job:** Tells the app what to display. If you delete everything in this file, the app opens as a blank window (or shows the "Empty State" error page).
+    
+
+### 5. `dusky_style.css` (The Decor)
+
+**Role:** Visual Styling. This standard CSS file overrides the default GTK look. It defines the rounded corners of the cards, the specific colors of the toggle switches, the "dim" look of labels, and the hover effects.
+
+- **Key Job:** Makes the app look like "Dusky" rather than a generic Linux window.
