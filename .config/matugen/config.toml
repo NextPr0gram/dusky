@@ -86,7 +86,7 @@ pkill -SIGUSR1 kitty || true
 '''
 
 [templates.opencode]
-input_path = '~/.config/matugen/templates/opencode.json'
+input_path = '~/.config/matugen/templates/opencode-colors.json'
 output_path = '~/.config/opencode/generated/opencode.json'
 
 [templates.alacritty]
